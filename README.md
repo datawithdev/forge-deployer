@@ -72,7 +72,7 @@ Task can be chained together with the usage of a `|` *example:* `artisan:up|arti
 
   ```shell
   DEPLOYER_BEFORE=
-  DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link|
+  DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link
   DEPLOYER_AFTER=site:status
   ```
 
