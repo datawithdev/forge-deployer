@@ -101,22 +101,22 @@ Task can be chained together with the usage of a vertical bar `|`.
 
 * Example `.env` for deploy helper task:
 
-```shell
-DEPLOYER_BEFORE=
-DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link
-DEPLOYER_AFTER=site:status
-```
+  ```shell
+  DEPLOYER_BEFORE=
+  DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link
+  DEPLOYER_AFTER=site:status
+  ```
 
-* If your deploy fails with this error
+* If your deploy fails with this error:
 
-```shell
-[Deployer\Exception\GracefulShutdownException]  
-Deploy locked.                                  
-Execute "dep deploy:unlock " to unlock.
-```
+  ```shell
+  [Deployer\Exception\GracefulShutdownException]  
+  Deploy locked.                                  
+  Execute "dep deploy:unlock " to unlock.
+  ```
 
-Add this to your `.env` (Just make sure to remove it later after the deploy is successful)
+  Add this to your `.env` (Just make sure to remove it later after the deploy is successful)
 
-```shell
-DEPLOYER_BEFORE=deploy:unlock
-```
+  ```shell
+  DEPLOYER_BEFORE=deploy:unlock
+  ```
