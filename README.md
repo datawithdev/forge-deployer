@@ -19,24 +19,24 @@ Once deployed edit the environment file to make necessary changes. Please make s
 * `DEPLOYER_REPOSITORY` *Repository to deploy*
 * `DEPLOYER_PHP_VERSION` *PHP version on the Forge server as noted in the Forge Deploy Script*
 
-## Forge Apps setting
+###### Forge Apps setting
 
 * Make sure `Quick Deploy` is **OFF**
 * Update the `Deploy Script` to add our Deployer command. *Note the default Forge script has been commented out after the directory change.*
-```shell
-cd /home/forge/example.com
-#git pull origin master
-#composer install --no-interaction --prefer-dist --optimize-autoloader
-#echo "" | sudo -S service php7.1-fpm reload
+  ```shell
+  cd /home/forge/example.com
+  #git pull origin master
+  #composer install --no-interaction --prefer-dist --optimize-autoloader
+  #echo "" | sudo -S service php7.1-fpm reload
 
-#if [ -f artisan ]
-#then
-#    php artisan migrate --force
-#fi
+  #if [ -f artisan ]
+  #then
+  #    php artisan migrate --force
+  #fi
 
-# Initiate Deployer
-php vendor/bin/dep forge:deploy
-```
+  # Initiate Deployer
+  php vendor/bin/dep forge:deploy
+  ```
 * Initiate a deployment by using the `DEPLOY NOW` button in Forge.
 * (Optional) Add the `Deployment Trigger URL` to your production repository for automatic deployments.
 ## Deploy Task
@@ -66,5 +66,28 @@ Task can be chained together with the usage of a `|` *example:* `artisan:up|arti
 * `artisan:storage:link` *Execute artisan storage:link*
 * `site:status` *Check site status, and rollback deploy if down*
 
+## Tips and Tricks
 
+* Example `.env` for deploy helper task:
 
+  ```shell
+  DEPLOYER_BEFORE=
+  DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link|
+  DEPLOYER_AFTER=site:status
+  ```
+
+* If your deploy fails with this error:
+
+  ```shell
+  [Deployer\Exception\GracefulShutdownException]  
+  Deploy locked.                                  
+  Execute "dep deploy:unlock " to unlock.
+  ```
+
+  Add this to your `.env` (Just make sure to remove it later after the deploy is successful)
+
+  ```shell
+  DEPLOYER_BEFORE=deploy:unlock
+  ```
+
+  ​
