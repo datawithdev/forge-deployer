@@ -2,18 +2,22 @@
 
 A simple zero-downtime deployment tool for [Laravel Forge](https://forge.laravel.com/) using [Deployer](https://deployer.org)
 
+
+
 ## Features
 
 * Configuration options are set via the .env file
 * Automatic roll-back if site appears offline after deployment
 
+
+
 ## Usage
 
-Proceed to create a new site in Forge as you normally would do, but set the web directory to `/current/public`.
+Proceed to create a new site in Forge as you normally would do, but set the web directory   to `/current/public`.
 
-After the site has been provisioned head on over the site details and install this Git Repository: `est73/forge-deployer`
+After the site has been provisioned head on over the site details and install this Git Repository  `est73/forge-deployer` with `Install Composer Dependencies` checked.
 
-Once deployed edit the environment file to make necessary changes.
+Once the initial deploy is done edit the environment file and app settings to make these necessary changes.
 
 * Forge Environment setting:
   * `APP_URL` *Site url*
@@ -26,24 +30,41 @@ Once deployed edit the environment file to make necessary changes.
 
 * Forge Apps setting:
 
-  * Make sure `Quick Deploy` is **OFF**
-  * Update the `Deploy Script` to add our Deployer command. *Note the default Forge script has been commented out after the directory change.*
-    ```shell
-    cd /home/forge/example.com
-    #git pull origin master
-    #composer install --no-interaction --prefer-dist --optimize-autoloader
-    #echo "" | sudo -S service php7.1-fpm reload
+  * Deployment
 
-    #if [ -f artisan ]
-    #then
-    #    php artisan migrate --force
-    #fi
+    * Make sure `Quick Deploy` is **OFF**
 
-    # Initiate Deployer
-    php vendor/bin/dep forge:deploy
-    ```
-  * Initiate a deployment by using the `DEPLOY NOW` button in Forge.
-  * (Optional) Add the `Deployment Trigger URL` to your production repository for automatic deployments.
+  * Deploy Script
+
+    * Update the script to add our Deployer command.
+
+      *Note the default Forge script has been commented out after the directory change.*
+
+      ```shell
+      cd /home/forge/example.com
+      #git pull origin master
+      #composer install --no-interaction --prefer-dist --optimize-autoloader
+      #echo "" | sudo -S service php7.1-fpm reload
+
+      #if [ -f artisan ]
+      #then
+      #    php artisan migrate --force
+      #fi
+
+      # Initiate Deployer
+      php vendor/bin/dep forge:deploy
+      ```
+
+
+
+## Deploying a project
+
+To initiate a deployment press the  `DEPLOY NOW` button in Forge.
+
+(Optional) Add the `Deployment Trigger URL` to your production repository for automatic deployments.
+
+
+
 ## Deploy Task
 
 Additional task helpers can be added to the default deploy under these variables:
@@ -54,6 +75,8 @@ Additional task helpers can be added to the default deploy under these variables
 
 Task can be chained together with the usage of a vertical bar `|`.
 *Example:* `artisan:up|artisan:migrate|artisan:down`
+
+
 
 ## Available Task Helpers
 
@@ -72,28 +95,28 @@ Task can be chained together with the usage of a vertical bar `|`.
 * `artisan:storage:link` *Execute artisan storage:link*
 * `site:status` *Check site status, and rollback deploy if down*
 
+
+
 ## Tips and Tricks
 
 * Example `.env` for deploy helper task:
 
-  ```shell
-  DEPLOYER_BEFORE=
-  DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link
-  DEPLOYER_AFTER=site:status
-  ```
+```shell
+DEPLOYER_BEFORE=
+DEPLOYER_ARTISAN=artisan:optimize|artisan:route:cache|artisan:config:cache|artisan:migrate|artisan:storage:link
+DEPLOYER_AFTER=site:status
+```
 
 * If your deploy fails with this error
 
-  ```shell
-  [Deployer\Exception\GracefulShutdownException]  
-  Deploy locked.                                  
-  Execute "dep deploy:unlock " to unlock.
-  ```
+```shell
+[Deployer\Exception\GracefulShutdownException]  
+Deploy locked.                                  
+Execute "dep deploy:unlock " to unlock.
+```
 
-  Add this to your `.env` (Just make sure to remove it later after the deploy is successful)
+Add this to your `.env` (Just make sure to remove it later after the deploy is successful)
 
-  ```shell
-  DEPLOYER_BEFORE=deploy:unlock
-  ```
-
-  ​
+```shell
+DEPLOYER_BEFORE=deploy:unlock
+```
