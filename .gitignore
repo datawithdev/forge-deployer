@@ -1,0 +1,7 @@
+/.dep
+/.idea
+/vendor
+/current
+/src/.env
+.env
+composer.lock

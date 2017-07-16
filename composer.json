@@ -1,0 +1,17 @@
+{
+    "name": "est73/forge-deployer",
+    "description": "Laravel Forge Deployer",
+    "keywords": ["laravel", "forge", "deployer"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "deployer/deployer": "^5.1",
+        "vlucas/phpdotenv": "^2.4",
+        "kitetail/zttp": "^0.1.0"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "php vendor/bin/dep init:env"
+        ]
+    }
+}
