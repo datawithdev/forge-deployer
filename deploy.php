@@ -108,7 +108,7 @@ task('forge:deploy', [
     'deployer:after'
 ]);
 
-// Additional task to preform
+// Additional task to perform
 after('rollback', 'php-fpm:restart');
 after('deploy:failed', 'deploy:unlock');
 after('deploy', 'success');
